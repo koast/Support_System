@@ -1,5 +1,6 @@
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * The responder class represents a response generator object.
@@ -12,7 +13,8 @@ public class Responder
 {
     private Random aleatorio;
     private ArrayList<String> frases;
-    
+    private HashMap<String,String> contestacion;
+
     /**
      * Construct a Responder - nothing to do
      */
@@ -20,8 +22,13 @@ public class Responder
     {
         aleatorio = new Random();
         frases = new ArrayList<>();
+        contestacion = new HashMap<>();
+        contestacion.put("computer","Check your operating system, which is?");
+        contestacion.put("internet","Check the cable, you still have this problem?");
+        contestacion.put("monitor","Check the display unit,can you see something?");
+        contestacion.put("keyboard","Is the cable connected?");
         frases.add("That sounds interesting. Tell me more...");
-        frases.add("This will be important, i noting that...");
+        frases.add("This will be important, i am noting that...");
         frases.add("Wait a moment, i need to ask about of this to other department");
         frases.add("The technical service don't take care about that sorry");
         frases.add("Sorry, I don't understand you, can u explain it in other way?");
@@ -31,8 +38,18 @@ public class Responder
      * Generate a response.
      * @return   A string that should be displayed as the response
      */
-    public String generateResponse()
+    public String generateResponse(String context)
     {
-        return frases.get(aleatorio.nextInt(5));        
+        String respuesta;
+            if(contestacion.get(context) == null)
+            {
+                respuesta = frases.get(aleatorio.nextInt(frases.size()));        
+            }
+            else
+            {
+                respuesta = contestacion.get(context);
+            }
+            
+            return respuesta;
     }
 }
