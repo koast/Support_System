@@ -29,6 +29,7 @@ public class Responder
         contestacion.put("internet","Check the cable, you still have this problem?");
         contestacion.put("monitor","Check the display unit,can you see something?");
         contestacion.put("keyboard","Is the cable connected?");
+        contestacion.put("broken","Who is broken?");
         frases.add("That sounds interesting. Tell me more...");
         frases.add("This will be important, i am noting that...");
         frases.add("Wait a moment, i need to ask about of this to other department");
@@ -43,23 +44,22 @@ public class Responder
     public String generateResponse(HashSet<String> context)
     {
         String response = null;
-        String[] inputString = null;
-        int index = 0;
+        String finalResponse = "";
         boolean text = false;
         Iterator<String> it = context.iterator();
-        while(it.hasNext() && !text)
+        while(it.hasNext())
         {
             response = contestacion.get(it.next());
             
-            if(response != null || !it.hasNext())
+            if (response != null)
             {
-                text = true;
+                finalResponse +=" " + response;
             }
         }
-        if (response == null)
+        if (finalResponse == null)
         {
-            response = frases.get(aleatorio.nextInt(frases.size()));
+            finalResponse = frases.get(aleatorio.nextInt(frases.size()));
         }
-        return response;
+        return finalResponse;
     }
 }
